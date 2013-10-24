@@ -7,7 +7,7 @@
 		body 	 = doc.getElementsByTagName('body')[0];
 
 	//Load script in asynchrone mode
-	socialAPI.async = true;
+	socialAPI.async 	= true;
 
 	//Manage API to load and params
 	socialAPI.load  = {
