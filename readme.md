@@ -3,7 +3,7 @@ Social API
 
 Easy way to load social API properly in your Javascript
 
-Add this code before the closing </body> tag. Do not add SDK in your HTML, and don't add "fb-root" tag for Facebook SDK, all it's automatically add with the script.
+Add this code before the closing body tag. Do not add SDK in your HTML, and don't add "fb-root" tag for Facebook SDK, all it's automatically add with the script.
 
 ```html
 <script src="js/social-api.js"></script>
