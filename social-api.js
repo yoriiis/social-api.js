@@ -3,8 +3,8 @@
 	'use strict';
 
 	var socialAPI 	= window.socialAPI || {},
-		doc 	= document,
-		body 	= doc.getElementsByTagName('body')[0];
+		doc   	  = document,
+		body 	 = doc.getElementsByTagName('body')[0];
 
 	//Load script in asynchrone mode
 	socialAPI.async = true;
