@@ -2,15 +2,15 @@
 
 	'use strict';
 
-	var socialAPI 		= window.socialAPI || {},
-		doc 		= document,
-		body 		= doc.getElementsByTagName('body')[0];
+	var socialAPI 	= window.socialAPI || {},
+		doc 	= document,
+		body 	= doc.getElementsByTagName('body')[0];
 
 	//Load script in asynchrone mode
-	socialAPI.async 	= true;
+	socialAPI.async = true;
 
 	//Manage API to load and params
-	socialAPI.load = {
+	socialAPI.load  = {
 
 		twitter: function(){
 			this.append('//platform.twitter.com/widgets.js', 'twitter-wjs');
