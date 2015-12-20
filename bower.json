@@ -1,0 +1,38 @@
+{
+  "name": "social-api.js",
+  "version": "1.1.0",
+  "description": "Easy way to load social API properly in your Javascript",
+  "main": "./social-api.js",
+  "moduleType": [
+    "globals"
+  ],
+  "dependencies"  : {},
+  "keywords": [
+    "social",
+    "social network api",
+    "social api",
+    "twitter",
+    "twitter api",
+    "pinterest",
+    "pinterest api",
+    "youtube",
+    "youtube api",
+    "youtube iframe api",
+    "youtube player api",
+    "facebook",
+    "facebook api",
+    "fb",
+    "Google plus",
+    "Google plus api",
+    "Google +",
+    "Google + api",
+    "VKontakte",
+    "VKontakte api"
+  ],
+  "ignore": [],
+  "authors": [
+    "Joris DANIEL"
+  ],
+  "license": "MIT",
+  "homepage": "https://github.com/yoriiis/social-api.js"
+}

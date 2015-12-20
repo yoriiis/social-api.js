@@ -1,7 +1,7 @@
 /**
  *
  * Plugin:
- * @version 1.1
+ * @version 1.2
  *
  * @author: Joris DANIEL
  * @fileoverview: Easy way to load social API properly in your Javascript
@@ -33,8 +33,9 @@
             this.append('//assets.pinterest.com/js/pinit.js');
         },
 
-        youtube: function() {
-            this.append('//youtube.com/player_api');
+        youtube: function(api) {
+            var api = (api == 'iframe') ? 'iframe_api' : 'player_api';
+            this.append('//youtube.com/' + api);
         },
 
         facebook: function(locale) {

@@ -1,4 +1,4 @@
-Social API
+Social API JS
 ==================================================
 
 Easy way to load social API properly in your Javascript
