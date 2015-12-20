@@ -1,7 +1,7 @@
 /**
  *
  * Plugin:
- * @version 1.2
+ * @version 1.2.0
  *
  * @author: Joris DANIEL
  * @fileoverview: Easy way to load social API properly in your Javascript
