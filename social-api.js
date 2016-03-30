@@ -1,93 +1,86 @@
 /**
  *
  * Plugin:
- * @version 1.2.0
+ * @version 1.3.0
  *
  * @author: Joris DANIEL
  * @fileoverview: Easy way to load social API properly in your Javascript
- * Twitter, Pinterest, Youtube, Facebook, GooglePlus, VKontakte
+ * Twitter, Pinterest, Youtube, Facebook, GooglePlus, VKontakte and any url
  *
- * Copyright (c) 2014 Joris DANIEL
+ * Copyright (c) 2016 Joris DANIEL
  * Licensed under the MIT license
  *
  **/
-
 (function(win, doc) {
 
     'use strict';
 
     var socialAPI = win.socialAPI || {},
-        body = doc.getElementsByTagName('body')[0];
+        targetDOM = doc.getElementsByTagName('body')[0];
 
-    //Load script in asynchrone mode
-    socialAPI.async = true;
+    //Prevent use in <head>
+    if( typeof targetDOM === 'undefined' ){
+        targetDOM = doc.getElementsByTagName('head')[0];
+    }
 
-    //Manage API to load and params
-    socialAPI.load = {
+    socialAPI = {
+        async: true,
+        load: {
+            twitter: function twitter() {
+                this.append('//platform.twitter.com/widgets.js', 'twitter-wjs');
+            },
+            pinterest: function pinterest() {
+                this.append('//assets.pinterest.com/js/pinit.js');
+            },
+            youtube: function youtube(api) {
+                var defaultAPI = 'iframe_api',
+                    versionAPI = (typeof api != 'undefined') ? api : defaultAPI;
+                this.append('//youtube.com/' + versionAPI);
+            },
+            facebook: function facebook(locale) {
 
-        twitter: function() {
-            this.append('//platform.twitter.com/widgets.js', 'twitter-wjs');
-        },
+                var defaultLanguage = 'fr_FR',
+                    localeSDK = (typeof locale != 'undefined') ? locale : defaultLanguage;
 
-        pinterest: function() {
-            this.append('//assets.pinterest.com/js/pinit.js');
-        },
+                //If Facebook SDK already exist
+                if (doc.getElementById('facebook-jssdk')) {
+                    return;
+                }
 
-        youtube: function(api) {
-            var api = (api == 'iframe') ? 'iframe_api' : 'player_api';
-            this.append('//youtube.com/' + api);
-        },
+                //More information : https://developers.facebook.com/docs/javascript/quickstart
+                this.append('//connect.facebook.net/' + localeSDK + '/sdk.js#version=v2.5', 'facebook-jssdk');
 
-        facebook: function(locale) {
+            },
+            googlePlus: function googlePlus(locale) {
 
-            var defaultLanguage = 'fr_FR',
-                localeSDK = (typeof locale != 'undefined') ? locale : defaultLanguage,
-                tag;
+                var defaultLanguage = 'fr',
+                    localeSDK = (typeof locale != 'undefined') ? locale : defaultLanguage;
 
-            //If Facebook SDK already exist
-            if (doc.getElementById('facebook-jssdk')) {
-                return;
+                //Change the locale
+                win.___gcfg = { lang: localeSDK };
+
+                this.append('//apis.google.com/js/plusone.js');
+
+            },
+            vkontakte: function vkontakte(){
+                this.append('//vkontakte.ru/js/api/openapi.js');
+            },
+            url: function url(url){
+                this.append(url);
+            },
+            append: function append(url, id) {
+
+                var tag = doc.createElement('script');
+                tag.async = this.async;
+                if (typeof id != 'undefined') {
+                    tag.id = id;
+                }
+                tag.type = 'text/javascript';
+                tag.src = url;
+                targetDOM.appendChild(tag);
+
             }
-
-            //Add fb-root tag
-            tag = document.createElement('div');
-            tag.id = 'fb-root';
-            doc.getElementsByTagName('body')[0].appendChild(tag);
-
-            //More information : https://developers.facebook.com/docs/javascript/quickstart
-            this.append('//connect.facebook.net/' + localeSDK + '/sdk.js', 'facebook-jssdk');
-
-        },
-
-        googlePlus: function(locale) {
-
-            var defaultLanguage = 'fr',
-                localeSDK = (typeof locale != 'undefined') ? locale : defaultLanguage;
-
-            //Change the locale
-            win.___gcfg = { lang: localeSDK };
-
-            this.append('//apis.google.com/js/plusone.js');
-
-        },
-
-        vkontakte: function(){
-            this.append('//vkontakte.ru/js/api/openapi.js');
-        },
-
-        append: function(url, id) {
-
-            var tag = doc.createElement('script');
-            tag.async = socialAPI.async;
-            if (typeof id != 'undefined') {
-                tag.id = id;
-            }
-            tag.type = 'text/javascript';
-            tag.src = url;
-            body.appendChild(tag);
-
         }
-
     }
 
     win.socialAPI = socialAPI;
