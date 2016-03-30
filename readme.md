@@ -21,7 +21,7 @@ socialAPI.load.googlePlus();
 socialAPI.load.url('anyOtherUrl');
 socialAPI.async = false;
 ```
-<hr />
+<br /><hr />
 ### Facebook example
 
 The function assigned to window.fbAsyncInit is run as soon as the SDK has completed loading. The code placed within this function initialize any social plugins.
@@ -32,7 +32,7 @@ window.fbAsyncInit = function(){
 }
 socialAPI.load.facebook();
 ```
-<hr />
+<br /><hr />
 ### Youtube example
 
 The function assigned to window.onYouTubeIframeAPIReady is run as soon as the SDK has completed loading.
@@ -43,7 +43,7 @@ window.onYouTubeIframeAPIReady = function(){
 }
 socialAPI.load.youtube();
 ```
-<hr />
+<br /><hr />
 ### Google Plus example
 
 The locale can be change for Google Plus with parameter "fr", please respect the syntax of the language.
