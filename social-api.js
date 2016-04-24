@@ -1,7 +1,7 @@
 /**
  *
  * Plugin:
- * @version 1.3.0
+ * @version 1.3.1
  *
  * @author: Joris DANIEL
  * @fileoverview: Easy way to load social API properly in your Javascript
@@ -65,8 +65,8 @@
             vkontakte: function vkontakte(){
                 this.append('//vkontakte.ru/js/api/openapi.js');
             },
-            url: function url(url){
-                this.append(url);
+            url: function url(urlAdress){
+                this.append(urlAdress);
             },
             append: function append(url, id) {
 
