@@ -1,7 +1,7 @@
 /**
  *
  * Plugin:
- * @version 1.3.1
+ * @version 1.3.2
  *
  * @author: Joris DANIEL
  * @fileoverview: Easy way to load social API properly in your Javascript
@@ -27,15 +27,15 @@
         async: true,
         load: {
             twitter: function twitter() {
-                this.append('//platform.twitter.com/widgets.js', 'twitter-wjs');
+                this.append('https://platform.twitter.com/widgets.js', 'twitter-wjs');
             },
             pinterest: function pinterest() {
-                this.append('//assets.pinterest.com/js/pinit.js');
+                this.append('https://assets.pinterest.com/js/pinit.js');
             },
             youtube: function youtube(api) {
                 var defaultAPI = 'iframe_api',
                     versionAPI = (typeof api != 'undefined') ? api : defaultAPI;
-                this.append('//youtube.com/' + versionAPI);
+                this.append('https://youtube.com/' + versionAPI);
             },
             facebook: function facebook(locale) {
 
@@ -48,7 +48,7 @@
                 }
 
                 //More information : https://developers.facebook.com/docs/javascript/quickstart
-                this.append('//connect.facebook.net/' + localeSDK + '/sdk.js#version=v2.5', 'facebook-jssdk');
+                this.append('https://connect.facebook.net/' + localeSDK + '/sdk.js#version=v2.5', 'facebook-jssdk');
 
             },
             googlePlus: function googlePlus(locale) {
@@ -59,11 +59,11 @@
                 //Change the locale
                 win.___gcfg = { lang: localeSDK };
 
-                this.append('//apis.google.com/js/plusone.js');
+                this.append('https://apis.google.com/js/plusone.js');
 
             },
             vkontakte: function vkontakte(){
-                this.append('//vkontakte.ru/js/api/openapi.js');
+                this.append('https://vkontakte.ru/js/api/openapi.js');
             },
             url: function url(urlAdress){
                 this.append(urlAdress);
