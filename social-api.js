@@ -1,11 +1,11 @@
 /**
  *
  * Plugin:
- * @version 1.3.2
+ * @version 1.3.3
  *
  * @author: Joris DANIEL
  * @fileoverview: Easy way to load social API properly in your Javascript
- * Twitter, Pinterest, Youtube, Facebook, GooglePlus, VKontakte and any url
+ * Twitter, Pinterest, Youtube, Facebook, GooglePlus, GoogleMaps, VKontakte or any API url
  *
  * Copyright (c) 2016 Joris DANIEL
  * Licensed under the MIT license
@@ -24,19 +24,27 @@
     }
 
     socialAPI = {
+
         async: true,
+
         load: {
+
             twitter: function twitter() {
                 this.append('https://platform.twitter.com/widgets.js', 'twitter-wjs');
             },
+
             pinterest: function pinterest() {
                 this.append('https://assets.pinterest.com/js/pinit.js');
             },
+
             youtube: function youtube(api) {
+
                 var defaultAPI = 'iframe_api',
                     versionAPI = (typeof api != 'undefined') ? api : defaultAPI;
                 this.append('https://youtube.com/' + versionAPI);
+
             },
+
             facebook: function facebook(locale) {
 
                 var defaultLanguage = 'fr_FR',
@@ -51,6 +59,7 @@
                 this.append('https://connect.facebook.net/' + localeSDK + '/sdk.js#version=v2.5', 'facebook-jssdk');
 
             },
+
             googlePlus: function googlePlus(locale) {
 
                 var defaultLanguage = 'fr',
@@ -62,12 +71,32 @@
                 this.append('https://apis.google.com/js/plusone.js');
 
             },
+
+            googleMap: function(apiKey, callback){
+
+                var urlApi = 'https://maps.googleapis.com/maps/api/js';
+
+                if( typeof apiKey !== 'undefined' ){
+                    urlApi += '?key=' + apiKey;
+                }else{
+                    console.warn('Google Map API Javascript need a valid api key');
+                }
+
+                if( typeof callback !== 'undefined' ){
+                    urlApi += '&callback=' + callback;
+                }
+
+                this.append(urlApi);
+            },
+
             vkontakte: function vkontakte(){
                 this.append('https://vkontakte.ru/js/api/openapi.js');
             },
+
             url: function url(urlAdress){
                 this.append(urlAdress);
             },
+
             append: function append(url, id) {
 
                 var tag = doc.createElement('script');
