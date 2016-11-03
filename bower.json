@@ -2,7 +2,7 @@
   "name": "social-api.js",
   "version": "1.3.3",
   "description": "Easy way to load social API properly in your Javascript",
-  "main": "./social-api.min.js",
+  "main": "./social-api.js",
   "moduleType": [
     "globals"
   ],
