@@ -72,7 +72,7 @@
 
             },
 
-            googleMap: function(apiKey, callback){
+            googleMaps: function(apiKey, callback){
 
                 var urlApi = 'https://maps.googleapis.com/maps/api/js';
 
