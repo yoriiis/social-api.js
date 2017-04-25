@@ -1,0 +1,16 @@
+{
+  "name": "social-api.js",
+  "version": "1.4.0",
+  "description": "Easy way to load social API properly in your Javascript, compatible with Facebook API, Youtube API, Google Plus API, Google Maps API, Twitter API, Pinterest API, Vkontakte API or any API url.",
+  "main": "./social-api.js",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/yoriiis/social-api.js.git"
+  },
+  "author": "Joris DANIEL (http://yoriiis.github.io/social-api.js)",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/yoriiis/social-api.js/issues"
+  },
+  "homepage": "https://github.com/yoriiis/social-api.js#readme"
+}

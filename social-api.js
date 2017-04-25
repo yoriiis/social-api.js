@@ -1,13 +1,13 @@
 /**
  *
  * Plugin:
- * @version 1.3.3
+ * @version 1.4.0
  *
  * @author: Joris DANIEL
  * @fileoverview: Easy way to load social API properly in your Javascript
  * Twitter, Pinterest, Youtube, Facebook, GooglePlus, GoogleMaps, VKontakte or any API url
  *
- * Copyright (c) 2016 Joris DANIEL
+ * Copyright (c) 2017 Joris DANIEL
  * Licensed under the MIT license
  *
  **/
@@ -15,100 +15,165 @@
 
     'use strict';
 
-    var socialAPI = win.socialAPI || {},
-        targetDOM = doc.getElementsByTagName('body')[0];
-
-    //Prevent use in <head>
-    if( typeof targetDOM === 'undefined' ){
-        targetDOM = doc.getElementsByTagName('head')[0];
-    }
-
-    socialAPI = {
+    var socialAPI = {
 
         async: true,
+        apiLoaded: [],
 
-        load: {
+        //Prevent use in <head>
+        targetDOM: doc.querySelector('body') || doc.querySelector('head'),
 
-            twitter: function twitter() {
-                this.append('https://platform.twitter.com/widgets.js', 'twitter-wjs');
+        load: function(api, options) {
+
+            var config = {},
+                nameApi = api;
+
+            //Get config api from known apis or load custom url
+            if (api in this.apis) {
+                config = this.apis[api](options);
+            } else {
+                nameApi = 'custom';
+                config = {
+                    name: nameApi,
+                    url: api
+                }
+            }
+
+            if( config !== null ){
+
+                //Add script tag in the DOM
+                this.addScript(config);
+
+                //Push new api in array to keep info
+                this.apiLoaded.push({
+                    name: nameApi,
+                    url: config.url
+                });
+
+            }
+
+        },
+
+        addScript: function(options) {
+
+            var script = doc.createElement('script'),
+                options = options || {};
+
+            script.async = this.async;
+
+            if (typeof options.id !== 'undefined') {
+                script.id = options.id;
+            }
+
+            script.type = 'text/javascript';
+            script.src = options.url;
+            this.targetDOM.appendChild(script);
+
+        },
+
+        apis: {
+
+            twitter: function() {
+
+                var apiUrl = 'https://platform.twitter.com/widgets.js';
+                return {
+                    url: apiUrl,
+                    id: 'twitter-wjs'
+                };
+
             },
 
-            pinterest: function pinterest() {
-                this.append('https://assets.pinterest.com/js/pinit.js');
-            },
+            pinterest: function() {
 
-            youtube: function youtube(api) {
-
-                var defaultAPI = 'iframe_api',
-                    versionAPI = (typeof api != 'undefined') ? api : defaultAPI;
-                this.append('https://youtube.com/' + versionAPI);
+                var apiUrl = 'https://assets.pinterest.com/js/pinit.js';
+                return {
+                    url: apiUrl
+                };
 
             },
 
-            facebook: function facebook(locale) {
+            youtube: function(options) {
 
-                var defaultLanguage = 'fr_FR',
-                    localeSDK = (typeof locale != 'undefined') ? locale : defaultLanguage;
+                var apiUrl = 'https://youtube.com',
+                    options = options || {},
+                    version = (typeof options.api !== 'undefined') ? options.api : 'iframe_api';
+
+                apiUrl += '/' + version;
+
+                return {
+                    url: apiUrl
+                };
+
+            },
+
+            facebook: function(options) {
+
+                var apiUrl = 'https://connect.facebook.net',
+                    options = options || {},
+                    language = (typeof options.language !== 'undefined') ? options.language : 'fr_FR',
+                    version = (typeof options.version !== 'undefined') ? options.version : '2.9',
+                    xfbml = (typeof options.xfbml !== 'undefined') ? options.xfbml : 0;
 
                 //If Facebook SDK already exist
                 if (doc.getElementById('facebook-jssdk')) {
-                    return;
+                    console.warn('Facebook SDK is already loaded.');
+                    return null;
                 }
+
+                apiUrl += '/' + language + '/sdk.js#xfbml=' + xfbml + '&version=v' + version;
 
                 //More information : https://developers.facebook.com/docs/javascript/quickstart
-                this.append('https://connect.facebook.net/' + localeSDK + '/sdk.js#version=v2.5', 'facebook-jssdk');
+                return {
+                    url: apiUrl,
+                    id: 'facebook-jssdk'
+                };
 
             },
 
-            googlePlus: function googlePlus(locale) {
+            googlePlus: function(options) {
 
-                var defaultLanguage = 'fr',
-                    localeSDK = (typeof locale != 'undefined') ? locale : defaultLanguage;
+                var apiUrl = 'https://apis.google.com/js/plusone.js',
+                    options = options || {},
+                    language = (typeof options.language !== 'undefined') ? options.language : 'fr';
 
                 //Change the locale
-                win.___gcfg = { lang: localeSDK };
+                win.___gcfg = {
+                    lang: language
+                };
 
-                this.append('https://apis.google.com/js/plusone.js');
+                return {
+                    url: apiUrl
+                };
 
             },
 
-            googleMaps: function(apiKey, callback){
+            googleMaps: function(options) {
 
-                var urlApi = 'https://maps.googleapis.com/maps/api/js';
+                var apiUrl = 'https://maps.googleapis.com/maps/api/js',
+                    options = options || {};
 
-                if( typeof apiKey !== 'undefined' ){
-                    urlApi += '?key=' + apiKey;
-                }else{
-                    console.warn('Google Map API Javascript need a valid api key');
+                if (typeof options.apiKey !== 'undefined') {
+                    apiUrl += '?key=' + options.apiKey;
+                }
+                if (typeof options.callback !== 'undefined') {
+                    apiUrl += '&callback=' + options.callback;
                 }
 
-                if( typeof callback !== 'undefined' ){
-                    urlApi += '&callback=' + callback;
-                }
+                return {
+                    url: apiUrl
+                };
 
-                this.append(urlApi);
             },
 
-            vkontakte: function vkontakte(){
-                this.append('https://vkontakte.ru/js/api/openapi.js');
-            },
+            vkontakte: function() {
 
-            url: function url(urlAdress){
-                this.append(urlAdress);
-            },
-
-            append: function append(url, id) {
-
-                var tag = doc.createElement('script');
-                tag.async = this.async;
-                if (typeof id != 'undefined') {
-                    tag.id = id;
-                }
-                tag.type = 'text/javascript';
-                tag.src = url;
-                targetDOM.appendChild(tag);
+                var apiUrl = 'https://vkontakte.ru/js/api/openapi.js';
+                return {
+                    url: apiUrl
+                };
 
             }
+
         }
     }
 
