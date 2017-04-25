@@ -1,7 +1,7 @@
 {
   "name": "social-api.js",
-  "version": "1.3.3",
-  "description": "Easy way to load social API properly in your Javascript",
+  "version": "1.4.0",
+  "description": "Easy way to load social API properly in your Javascript, compatible with Facebook API, Youtube API, Google Plus API, Google Maps API, Twitter API, Pinterest API, Vkontakte API or any API url.",
   "main": "./social-api.js",
   "moduleType": [
     "globals"
