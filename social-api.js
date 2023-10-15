@@ -3,11 +3,11 @@
  * Plugin:
  * @version 1.4.0
  *
- * @author: Joris DANIEL
+ * @author: Yoriiis
  * @fileoverview: Easy way to load social API properly in your Javascript
  * Twitter, Pinterest, Youtube, Facebook, GooglePlus, GoogleMaps, VKontakte or any API url
  *
- * Copyright (c) 2017 Joris DANIEL
+ * Copyright (c) 2017 Yoriiis
  * Licensed under the MIT license
  *
  **/
